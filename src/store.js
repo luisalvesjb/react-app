@@ -2,10 +2,6 @@
 import { createStore } from 'redux'
 import reducers from './reducers'
 
-const cfgStore = () => {
-    return createStore(
-        reducers
-    ) 
-}
+const store = createStore( reducers ) 
 
-export default cfgStore
+export default store
