@@ -2,69 +2,25 @@ import React, { Component } from 'react'
 
 class Home extends Component{
 
-
-    // componentDidMount(){
-
-    //     const instanceAxios = axios.create({
-    //         headers: {
-    //             'Access-Control-Allow-Origin': '*'
-    //           }
-    //     })
-    //     axiinstanceAxiosos.get('http://localhost:8000/produtos').then((res) => console.log(res))
-    // }
-
     render(){
         return(
-            <ul id="accordion1" class="nav nav-pills flex-column">
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="collapse" href="#item-1" data-parent="#accordion1">Item 1</a>
-    <div id="item-1" class="collapse show">
-      <ul class="nav flex-column ml-3">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 1-1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 1-2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 1-3</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="collapse" href="#item-2" data-parent="#accordion1">Item 2</a>
-    <div id="item-2" class="collapse">
-      <ul class="nav flex-column ml-3">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 2-1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 2-2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 2-3</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="collapse" href="#item-3" data-parent="#accordion1">Item 3</a>
-    <div id="item-3" class="collapse">
-      <ul class="nav flex-column ml-3">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 3-1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 3-2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sub 3-3</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-</ul>
+            
+          <section className="row">
+
+							<div className="col-md-12">
+
+								<div className="jumbotron">
+									<h1 className="mb-4">Hello, world!</h1>
+									<p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+									<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+									<p className="lead"><a className="btn btn-primary btn-lg mt-2" href="#" role="button">Learn more</a></p>
+								</div>
+                
+
+							</div>
+
+						</section>
+
         )
     }
 

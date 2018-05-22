@@ -4,9 +4,9 @@ class Footer extends Component{
 
     render(){
         return(
-            <footer className="footer text-right">
-                2018 © Highdmin. - Coderthemes.com
-            </footer>
+            <section className="row">
+                <div className="col-12 mt-1 mb-4">Template by <a href="https://www.medialoot.com">Medialoot</a></div>
+            </section>
         )
     }
 
