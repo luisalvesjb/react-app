@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, Button } from 'antd';
+import 'antd/dist/antd.css'
 import axios from 'axios'
+
 
 class Produtos extends Component{
 
@@ -9,7 +11,7 @@ class Produtos extends Component{
 
         this.state = {
             produtos: [],
-            visible: false
+            visible: false,
         }
 
     }
@@ -22,7 +24,6 @@ class Produtos extends Component{
             })
         })
     }
-
 
     showModal = (id) => {
         console.log(id);
@@ -50,16 +51,37 @@ class Produtos extends Component{
 
             <section>
 
-                <Modal
-                    title="Editar Produto"
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Modal>
+                 <Modal
+            title="Editar Produto"
+            visible={this.state.visible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+        >
+            <div className="row">
+                    <div className="col-12">
+                        <div className="card mb-4">
+                            <div className="card-block">
+                                <h3 className="card-title">Editar Produto</h3>
+    
+    
+                                <form className="form" action="#">
+    
+                                    <div className="form-group row">
+                                        <label className="col-md-3 col-form-label">Default input field</label>
+                                        <div className="col-md-9">
+                                            <input type="text" name="regular" className="form-control" />
+                                        </div>
+                                    </div>
+    
+                                </form>
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </Modal>
+    
 
                 <div className="table-responsive">
                     <table className="table table-striped">
@@ -74,7 +96,7 @@ class Produtos extends Component{
                         <tbody>
 
                             {
-                                this.state.produtos.map( (produto, index) => { return(
+                                this.state.produtos.map( (produto, index) => (
                                 
                                 <tr key={index}>
                                     <td>{produto.id}</td>
@@ -86,9 +108,7 @@ class Produtos extends Component{
                                         </Button>
                                     </td>
                                 </tr>
-                                )
-
-                            })}
+                            ))}
                             
                         </tbody>
                     </table>
