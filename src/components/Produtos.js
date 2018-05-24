@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { Modal, Button } from 'antd';
 import 'antd/dist/antd.css'
-import axios from 'axios'
+
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as actions from './../actions/Produtos'
+
 
 
 class Produtos extends Component{
@@ -10,19 +15,25 @@ class Produtos extends Component{
         super(props);
 
         this.state = {
-            produtos: [],
+            //produtos: [],
             visible: false,
         }
+
+        
 
     }
 
     componentDidMount(){
+
+        this.props.getAll()
+
+        console.log(this.props);
         
-        axios.get('http://localhost:8000/produtos').then((res) => {
-            this.setState({
-                produtos: res.data.data
-            })
-        })
+        // api.all().then( (res) => {
+        //     this.setState({
+        //        // produtos: res.data.data
+        //     })
+        // })
     }
 
     showModal = (id) => {
@@ -95,20 +106,7 @@ class Produtos extends Component{
                         </thead>
                         <tbody>
 
-                            {
-                                this.state.produtos.map( (produto, index) => (
-                                
-                                <tr key={index}>
-                                    <td>{produto.id}</td>
-                                    <td>{produto.titulo}</td>
-                                    <td>{produto.preco}</td>
-                                    <td>
-                                        <Button type="primary" onClick={(e) => this.showModal(produto.id)}>
-                                            Editar
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
+                            
                             
                         </tbody>
                     </table>
@@ -121,4 +119,11 @@ class Produtos extends Component{
 
 }
 
-export default Produtos
+const mapStateToProps = state => ({
+    produtos: state.produtos
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Produtos)
