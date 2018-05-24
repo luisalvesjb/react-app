@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { Modal, Button } from 'antd';
 import 'antd/dist/antd.css'
-import axios from 'axios'
+
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as actions from './../actions/Produtos'
+
 
 
 class Produtos extends Component{
@@ -10,19 +15,35 @@ class Produtos extends Component{
         super(props);
 
         this.state = {
-            produtos: [],
+            produtoslocal: [],
             visible: false,
         }
+
+        
 
     }
 
     componentDidMount(){
+
+        this.props.getAll()
         
-        axios.get('http://localhost:8000/produtos').then((res) => {
+        setTimeout(() =>{
+
             this.setState({
-                produtos: res.data.data
+                produtoslocal: this.state.produtos
             })
-        })
+
+            console.log(this.state);
+        }, 1500)
+        
+
+        
+        
+        // api.all().then( (res) => {
+        //     this.setState({
+        //        // produtos: res.data.data
+        //     })
+        // })
     }
 
     showModal = (id) => {
@@ -95,8 +116,8 @@ class Produtos extends Component{
                         </thead>
                         <tbody>
 
-                            {
-                                this.state.produtos.map( (produto, index) => (
+                             {
+                                this.state.produtoslocal.map( (produto, index) => (
                                 
                                 <tr key={index}>
                                     <td>{produto.id}</td>
@@ -110,6 +131,7 @@ class Produtos extends Component{
                                 </tr>
                             ))}
                             
+                            
                         </tbody>
                     </table>
                 </div>
@@ -121,4 +143,11 @@ class Produtos extends Component{
 
 }
 
-export default Produtos
+const mapStateToProps = state => ({
+    produtos: state.produtos
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Produtos)
