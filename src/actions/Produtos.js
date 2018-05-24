@@ -3,12 +3,21 @@ import api from '../api/Produtos'
 
 
 export function getAll(){
+
+    let produtos = []
+
     api.all().then( (res) => {
-        return getAll(res.data.data)
-    })  
+        produtos = setProdutos(res.data.data)
+    })
+    
+    return {
+        type: 'PRODUTOS_ALL',
+        payload: produtos
+        
+    }
 }
 
-export function setProdutos(produtos){
+function setProdutos(produtos){
 
     return {
         type: 'PRODUTOS_ALL',

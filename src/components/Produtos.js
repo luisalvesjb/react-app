@@ -15,7 +15,7 @@ class Produtos extends Component{
         super(props);
 
         this.state = {
-            //produtos: [],
+            produtoslocal: [],
             visible: false,
         }
 
@@ -26,8 +26,18 @@ class Produtos extends Component{
     componentDidMount(){
 
         this.props.getAll()
+        
+        setTimeout(() =>{
 
-        console.log(this.props);
+            this.setState({
+                produtoslocal: this.state.produtos
+            })
+
+            console.log(this.state);
+        }, 1500)
+        
+
+        
         
         // api.all().then( (res) => {
         //     this.setState({
@@ -106,6 +116,20 @@ class Produtos extends Component{
                         </thead>
                         <tbody>
 
+                             {
+                                this.state.produtoslocal.map( (produto, index) => (
+                                
+                                <tr key={index}>
+                                    <td>{produto.id}</td>
+                                    <td>{produto.titulo}</td>
+                                    <td>{produto.preco}</td>
+                                    <td>
+                                        <Button type="primary" onClick={(e) => this.showModal(produto.id)}>
+                                            Editar
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
                             
                             
                         </tbody>
