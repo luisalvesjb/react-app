@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from './../actions/Produtos'
+import { thunkProdutos } from './../actions/Produtos'
 
 
 
@@ -15,53 +15,29 @@ class Produtos extends Component{
         super(props);
 
         this.state = {
-            produtoslocal: [],
-            visible: false,
+            visible: false
         }
-
-        
-
     }
 
     componentDidMount(){
-
-        this.props.getAll()
+        console.log(this.props)
+        this.props.thunkProdutos()
         
-        setTimeout(() =>{
-
-            this.setState({
-                produtoslocal: this.state.produtos
-            })
-
-            console.log(this.state);
-        }, 1500)
-        
-
-        
-        
-        // api.all().then( (res) => {
-        //     this.setState({
-        //        // produtos: res.data.data
-        //     })
-        // })
     }
 
     showModal = (id) => {
-        console.log(id);
         this.setState({
           visible: true,
         });
       }
     
       handleOk = (e) => {
-        console.log(e);
         this.setState({
           visible: false,
         });
       }
     
       handleCancel = (e) => {
-        console.log(e);
         this.setState({
           visible: false,
         });
@@ -116,21 +92,6 @@ class Produtos extends Component{
                         </thead>
                         <tbody>
 
-                             {
-                                this.state.produtoslocal.map( (produto, index) => (
-                                
-                                <tr key={index}>
-                                    <td>{produto.id}</td>
-                                    <td>{produto.titulo}</td>
-                                    <td>{produto.preco}</td>
-                                    <td>
-                                        <Button type="primary" onClick={(e) => this.showModal(produto.id)}>
-                                            Editar
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
-                            
                             
                         </tbody>
                     </table>
@@ -147,7 +108,7 @@ const mapStateToProps = state => ({
     produtos: state.produtos
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
+const mapDispatchToProps = dispatch => dispatch(thunkProdutos()) //bindActionCreators(actions, dispatch)
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Produtos)
+export default connect(mapStateToProps, mapDispatchToProps)(Produtos)

@@ -1,8 +1,8 @@
-export default function produtos(state = [], action) {
+export default function produtos(state = {}, action) {
 
     switch(action.type){
-        case 'PRODUTOS_ALL':
-            return [...state, action.payload]
+        case 'SUCCESS':
+            return {produtos:action.payload.produtos}
         default:
         return state;
     }
