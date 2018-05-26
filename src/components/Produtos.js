@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { thunkProdutos } from './../actions/Produtos'
+import * as actions from './../actions/Produtos'
 
 
 
@@ -20,8 +20,8 @@ class Produtos extends Component{
     }
 
     componentDidMount(){
-        console.log(this.props)
         this.props.thunkProdutos()
+        
         
     }
 
@@ -91,7 +91,22 @@ class Produtos extends Component{
                             </tr>
                         </thead>
                         <tbody>
+                            
+                        {
+                            this.props.produtos.map( (produto, index) => (
 
+                                <tr key={index}>
+                                    <td>{produto.id}</td>
+                                    <td>{produto.titulo}</td>
+                                    <td>{produto.preco}</td>
+                                    <td>
+                                        <Button type="primary" onClick={(e) => this.showModal(produto.id)}>
+                                            Editar {produto.id}
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                             
                         </tbody>
                     </table>
@@ -108,7 +123,7 @@ const mapStateToProps = state => ({
     produtos: state.produtos
 })
 
-const mapDispatchToProps = dispatch => dispatch(thunkProdutos()) //bindActionCreators(actions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Produtos)
