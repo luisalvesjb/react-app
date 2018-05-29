@@ -6,15 +6,9 @@ const axiosApi = axios.create({
 })
 
 const api = {
-    all: () => axiosApi.get()
+    all : () => axiosApi.get(),
+    find: (id) => axiosApi.get('/' + id ),
+    save: (model) => axiosApi.put('',model)
 }
 
 export default api
-
-    // axios.get('http://localhost:8000/produtos').then((res) => {
-    //         this.setState({
-    //             produtos: res.data.data
-    //         })
-    //     })
-
-

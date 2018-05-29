@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd';
+import { Modal, Button, Spin, Icon  } from 'antd';
 import 'antd/dist/antd.css'
 
 
@@ -15,45 +15,82 @@ class Produtos extends Component{
         super(props);
 
         this.state = {
-            visible: false
+            visible: false,
+            produtoEmAlteracao: [],
+            loading: false
         }
     }
 
     componentDidMount(){
+
+        this.handleLoading()
         this.props.thunkProdutos()
-        
-        
+    }
+
+    componentWillReceiveProps(){
+        this.setState ({
+            loading: this.props.produtoEmAlteracao == undefined ? true : false
+        })
+    }
+
+    handleLoading(loading = true){
+        this.setState({ loading })
     }
 
     showModal = (id) => {
-        this.setState({
-          visible: true,
-        });
-      }
+
+        this.handleLoading()
+
+        this.props.findProduto(id)
+
+        console.log(this.refs)
+        setTimeout(() => {
+            this.setState({
+                visible: true,
+                produtoEmAlteracao: this.props.produtoEmAlteracao
+            });
+            console.log(this.props.produtoEmAlteracao)
+           this.handleLoading(false)
+        }, 1000)
+        
+    }
     
-      handleOk = (e) => {
+    handleOk = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
-      }
-    
-      handleCancel = (e) => {
+    }
+
+    handleCancel = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
-      }
+    }
+
+
+    handleChange = (e, {name, value}) => {
+
+        let prod = this.state.produtoEmAlteracao;
+        prod[name] = value;
+        this.setState({ produtoEmAlteracao: prod });
+
+    }
+
 
     render(){
-        return(
 
+        
+        const loaderIcon = <Icon type="loading" style={{ fontSize: 54 }} spin />
+
+        return(
             <section>
 
                  <Modal
-            title="Editar Produto"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-        >
+                title="Editar Produto"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                >
             <div className="row">
                     <div className="col-12">
                         <div className="card mb-4">
@@ -61,12 +98,27 @@ class Produtos extends Component{
                                 <h3 className="card-title">Editar Produto</h3>
     
     
-                                <form className="form" action="#">
-    
+                                <form className="form" action="#" ref="form">
                                     <div className="form-group row">
-                                        <label className="col-md-3 col-form-label">Default input field</label>
+                                        <label className="col-md-3 col-form-label">Produto</label>
                                         <div className="col-md-9">
-                                            <input type="text" name="regular" className="form-control" />
+                                            <input type="text" 
+                                            onChange={(e) => this.handleChange(e, e.target)}
+                                            defaultValue={this.state.produtoEmAlteracao.titulo} name="titulo" className="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group row">
+                                        <label className="col-md-3 col-form-label">Preço</label>
+                                        <div className="col-md-9">
+                                            <input type="text" defaultValue={this.state.produtoEmAlteracao.preco} name="preco" className="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group row">
+                                        <label className="col-md-3 col-form-label">Descrição</label>
+                                        <div className="col-md-9">
+                                            <textarea name="descricao" defaultValue={this.state.produtoEmAlteracao.descricao} className="form-control" ></textarea>
                                         </div>
                                     </div>
     
@@ -79,7 +131,7 @@ class Produtos extends Component{
                 </div>
         </Modal>
     
-
+        <Spin spinning={this.state.loading} indicator={loaderIcon}>
                 <div className="table-responsive">
                     <table className="table table-striped">
                         <thead>
@@ -101,7 +153,7 @@ class Produtos extends Component{
                                     <td>{produto.preco}</td>
                                     <td>
                                         <Button type="primary" onClick={(e) => this.showModal(produto.id)}>
-                                            Editar {produto.id}
+                                            Editar 
                                         </Button>
                                     </td>
                                 </tr>
@@ -111,7 +163,7 @@ class Produtos extends Component{
                         </tbody>
                     </table>
                 </div>
-
+            </Spin>
             </section>
 
         )
@@ -120,7 +172,8 @@ class Produtos extends Component{
 }
 
 const mapStateToProps = state => ({
-    produtos: state.produtos
+    produtos: state.produtos,
+    produtoEmAlteracao: state.produtoEmAlteracao
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)

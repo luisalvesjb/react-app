@@ -15,3 +15,20 @@ export function thunkProdutos(){
         })
     }
 }
+
+export function findProduto(id){
+    return (dispatch) => {
+
+        api.find(id).then((response) => {
+
+            dispatch({
+                type: 'FIND',
+                payload:{
+                    produto: response.data.data
+                }
+            })
+
+        })
+    }
+}
+
